@@ -48,6 +48,7 @@ Operators can take advantage of this plugin to configure their HPA/VPA settings 
             "avg_cpu": 300,
             "avg_memory": "",
             "enable_vpa": False,
+            "behavior": {},
         }
         return autoscaling_config
 
@@ -73,6 +74,7 @@ You can also override the HPA/VPA configuration for any of the services supporte
             "avg_cpu": 70,
             "avg_memory": "",
             "enable_vpa": False,
+            "behavior": {},
         }
         return autoscaling_config
 
@@ -92,6 +94,7 @@ You can also override the HPA/VPA configuration for any of the services supporte
             avg_cpu: 300
             avg_memory: ''
             enable_vpa: true
+            behavior: {}
         lms:
             enable_hpa: true
             memory_request: 1Gi
@@ -103,12 +106,33 @@ You can also override the HPA/VPA configuration for any of the services supporte
             avg_cpu: 70
             avg_memory: ''
             enable_vpa: true
+            behavior: {}
 
 .. note::
     - The main reason why 2 alternatives were provided to alter the HPA/VPA configuration is to enable operators to decide what alternative better suits their needs. In some cases, reducing the plugin dependency chain is desirable, thus using the plugin setting is a good alternative.
     - The configuration defined through the **POD_AUTOSCALING_EXTRA_SERVICES** plugin setting will have precedence over the **AUTOSCALING_CONFIG** filter final configuration.
     - Using only one of the 2 mechanisms available is strongly recommended to prevent potential misconfiguration.
     - VPA components can be enabled/disabled for different deployments thanks to the ``enable_vpa`` key defined on every configured service. The VPAs are configured with the **UpdateMode** mode disabled, so they don't modify Pod resources automatically. Instead, they work as a dry-run, setting the recommended resources for the deployments in every VPA object.
+
+Configuring HPA scaling behaviour (v22.1+ / Verawood)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 22.1.0 (Verawood)
+
+Set ``behavior`` to control HPA scale-up and scale-down dynamics. An empty
+dict (``{}``) omits the block, preserving Kubernetes defaults. See the
+`Kubernetes HPA behaviour docs <https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configuring-hpa-behavior>`_
+for all supported fields.
+
+.. code-block:: yaml
+
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 900
+        policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 120
 
 Migrating to Redwood version (18.x.x)
 -------------------------------------
@@ -147,6 +171,7 @@ The equivalent configuration for the 18.x.x version using the **AUTOSCALING_CONF
             "avg_cpu": 300,
             "avg_memory": "",
             "enable_vpa": False,
+            "behavior": {},
         }
         return autoscaling_config
 
