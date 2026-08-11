@@ -49,6 +49,7 @@ CORE_AUTOSCALING_CONFIG: dict[str, AUTOSCALING_ATTRS_TYPE] = {
         "avg_cpu": 100,
         "avg_memory": "",
         "enable_vpa": False,
+        "behavior": {},
     },
     "lms-worker": {
         "enable_hpa": True,
@@ -61,6 +62,7 @@ CORE_AUTOSCALING_CONFIG: dict[str, AUTOSCALING_ATTRS_TYPE] = {
         "avg_cpu": 100,
         "avg_memory": "",
         "enable_vpa": False,
+        "behavior": {},
     },
     "cms": {
         "enable_hpa": True,
@@ -73,6 +75,7 @@ CORE_AUTOSCALING_CONFIG: dict[str, AUTOSCALING_ATTRS_TYPE] = {
         "avg_cpu": 100,
         "avg_memory": "",
         "enable_vpa": False,
+        "behavior": {},
     },
     "cms-worker": {
         "enable_hpa": True,
@@ -85,6 +88,7 @@ CORE_AUTOSCALING_CONFIG: dict[str, AUTOSCALING_ATTRS_TYPE] = {
         "avg_cpu": 100,
         "avg_memory": "",
         "enable_vpa": False,
+        "behavior": {},
     },
 }
 
